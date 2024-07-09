@@ -5,12 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/test.css">
     <script src="js/jquery-3.7.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
   </head>
   <body>
     <div class="container">
-        <h1>안녕하세요!</h1>
+        <!-- 네비게이션 메뉴 -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand text-white" href="#">Admin</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">회원</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">제품</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">주문</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      기타  
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Q&A</a></li>
+                      <li><a class="dropdown-item" href="#">FAQ</a></li>
+                      <li><hr class="dropdown-divider" href="#"></li>
+                      <li><a class="dropdown-item" href="#">옵션</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <a href="#" class="btn btn-sm btn-outline-secondary btn-dark">Go Shop</a>
+              </div>
+            </div>
+          </nav>
+          <br>
+          <!-- 알림 -->
+          <div class="alert alert-primary" role="alert">
+           회원
+          </div>
+          <script>
+            function find_text() {
+                form1.action="#";
+                form1.submit();
+                alert('find_text()호출');
+            }
+          </script>
+          <!-- 검색 및 추가 버튼 -->
+          <form name="form1" action="">
+            <div class="row">
+                <div class="col-3" align="left">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">이름</span>
+                        <input type="text" name="text1" value="" class="form-control" onkeydown="if(event.keyCode == 13) {find_text();}"  placeholder="찾을 이름은?">
+                        <button class="btn mycolor1" type="button" onclick="find_text();">검색</button>
+                    </div>
+                </div>
+                <div class="col-9" align="right">
+                    <div class="btn btn-sm mycolor1">추가</div>
+                </div>
+            </div>
+          </form>
+
+          <!-- 목록 테이블 -->
+          <table class="table table-sm table-bodered table-hover mymargin5">
+            <tr class="mycolor2">
+                <td width="10%">번호</td>
+                <td width="20%">아이디</td>
+                <td width="20%">암호</td>
+                <td width="20%">이름</td>
+                <td width="20%">전화</td>
+                <td width="10%">등급</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>admin</td>
+                <td>1234</td>
+                <td>관리자</td>
+                <td>010-1111-1111</td>
+                <td>관리자</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>id1</td>
+                <td>1234</td>
+                <td>홍길동</td>
+                <td>010-2222-2222</td>
+                <td>직원</td>
+            </tr>
+          </table>
+          <br>
+          <!-- 페이지네이션 -->
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm justify-content-center mymargin5">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">◁</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item active" aria-current="page">
+                <span class="page-link" href="#">2</span></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">5</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">▷</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
     </div>
   </body>
 </html>

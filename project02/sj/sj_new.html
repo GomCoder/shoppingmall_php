@@ -1,0 +1,111 @@
+<!-- 추가 화면 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/test.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <title>성적 추가</title>
+</head>
+
+<body>
+    <div class="container">
+        <br>
+        <h2>성적 추가</h2>
+        <hr>
+        <br>
+        <form name="form1" action="sj_insert.php" method="post">
+            <table class="table table-sm table-bodered mymargin5">
+                <tr>
+                    <td width="20%" height="40" class="mycolor2">ID</td>
+                    <td width="80%" align="left"></td>
+                </tr>
+                <tr>
+                    <td width="20%" class="mycolor2">이름</td>
+                    <td width="80%" align="left">
+                        <div class="d-inline-flex">
+                            <input type="text" class="form-control form-control-sm" name="name" size="20" maxlength="20" value="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" class="mycolor2">
+                        국어
+                    </td>
+                    <td width="80%" align="left">
+                        <div class="d-inline-flex">
+                            <input type="text" class="form-control form-control-sm" name="kor" size="10" maxlength="10" value="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" class="mycolor2">
+                        영어
+                    </td>
+                    <td width="80%" align="left">
+                        <div class="d-inline-flex">
+                            <input type="text" class="form-control form-control-sm" name="eng" size="10" maxlength="10" value="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" class="mycolor2">
+                        수학
+                    </td>
+                    <td width="80%" align="left">
+                        <div class="d-inline-flex">
+                            <input type="text" class="form-control form-control-sm" name="mat" size="10" maxlength="10" value="">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" height="40" class="mycolor2">
+                        총점
+                    </td>
+                    <td width="80%" align="left">
+                        <div class="d-inline-flex">
+                            <input type="text" class="form-control form-control-sm" name="hap" value="" onchange="cal_score();">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%" height="40" class="mycolor2">
+                        평균
+                    </td>
+                    <td width="80%" align="left">
+                        <div class="d-inline-flex">
+                            <input type="text" class="form-control form-control-sm" name="avg" value="" onchange="cal_score();"> 
+                        </div>
+                    </td>
+                </tr>              
+            </table>
+            <br>
+            <div align="center">
+                <input type="submit" onclick="cal_score()" value="저장" class="btn btn-sm mycolor1">&nbsp;
+                <input type="button" value="이전화면으로" class="btn btn-sm mycolor1" onclick="history.back();">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    function cal_score() {
+        form1.hap.value = Number(form1.kor.value) +
+                            Number(form1.eng.value) +
+                            Number(form1.mat.value);
+        form1.avg.value = (form1.hap.value / 3.).toFixed(1);                    
+    }
+
+</script>
+
+<style>
+    form {
+        width: 300px;
+    }
+</style>

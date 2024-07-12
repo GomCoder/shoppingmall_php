@@ -17,7 +17,7 @@ $row = mysqli_fetch_array($result);
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="ko">
 
 <head>
     <meta charset="UTF-8">
@@ -26,13 +26,13 @@ $row = mysqli_fetch_array($result);
     <link rel="stylesheet" href="../css/test.css">
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
-    <title>성적 추가</title>
+    <title>성적 수정</title>
 </head>
 
 <body>
     <div class="container">
         <br>
-        <h2>성적 추가</h2>
+        <h2>성적 수정</h2>
         <hr>
         <br>
         <form name="form1" action="sj_update.php" method="post">

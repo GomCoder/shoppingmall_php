@@ -14,3 +14,80 @@
 
 ?>
 
+<?php
+// 페이지네이션 함수화
+
+function mypagination($query, $agrs, &$count, &$pagebar) {
+    global $db, $page_line, $page_block; //서버 DB 정보, Page관련 변수
+
+    $page = $_REQUEST["page"] ? $_REQUEST["page"] : 1; //page 초기화
+    
+    $url = basename($_SERVER['PHP_SELF']) . "?" . $args; //문서이름?전송할 변수들
+
+    $sql = strtolower($query); //레코드 개수 구하기
+    $sql = "select count(*) " . substr($sql, strpos($sql, "from"));
+
+    $result = mysqli_query($db, $sql);
+    if(!$result) exit('에러: $sql');
+
+    $row = mysqli_fetch_array($result);
+    $count = $row[0];//레코드 개수
+
+    $first = ($page-1) * $page_line; //해당 페이지 1번째 위치
+
+    $sql = str_replace(";", "", $query); //페이지 내 자료 읽기
+    $sql .= " limit $first, $page_line";
+    $result = mysqli_query($db, $sql);
+    if(!$result) exit('에러: $sql');
+
+    $pages = ceil($count / $page_line); //페이지수
+    $blocks = ceil($pages / $page_block); //블록 수
+    $block = ceil($page / $page_block);//블록 위치
+    $page_s = $page_block * ($block-1); //블록의 시작페이지
+    $page_e = $page_block * $block + 1 ; //블록의 마지막 페이지
+
+
+    if($block >= $blocks) {
+        $page_e = $pages+1;
+    }
+
+    $pagebar .="<nav>
+        <ul class='pagination pagination-sm justify-content-center py-1'>";
+  
+    if ($block > 1){ //이전 블록으로
+        $pagebar .= "<li class='page-item'>
+                <a class='page-link' href='$url&page=$page_s'>◀</a>
+                </li>";
+    }
+
+    for ($i = $page_s+1 ; $i < $page_e; $i++) {
+        
+        if ($page == $i) {
+            $pagebar .= "<li class='page-item active'>
+                <span class='page-link mycolor1'>$i</span>
+            </li>";
+
+        } else {
+            $pagebar .= "<li class='page-item'>
+                <a class='page-link' href='$url&page=$i'>$i</a>
+            </li>";
+            
+        }
+    }
+
+    if ($block < $blocks) { //다음 블록으로
+        $pagebar .= "<li class='page-item'>
+                <a class='page-link' href='$url&page=$page_e'>▶</a>
+                </li>";
+    }
+
+    $pagebar .= "</ul> </nav>";
+
+    return $result;
+
+
+
+
+}
+
+?>

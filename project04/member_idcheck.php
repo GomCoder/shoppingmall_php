@@ -1,9 +1,10 @@
-<!---------------------------------------------------------------------------------------------
-	제목 : 내 손으로 만드는 PHP 쇼핑몰무 따라하기 (실습용 디자인 HTML)
+<?php
+// 중복 아이디 검사 처리
+include "common.php";
+?>
 
-	소속 : 인덕대학교 컴퓨터소프트웨어학과
-	이름 : 교수 윤형태 (2024.02)
----------------------------------------------------------------------------------------------->
+
+
 <!doctype html>
 <html lang="kr" style="overflow:hidden">
 <head>
@@ -39,19 +40,26 @@
 	<div class="col" align="center">
 		<hr style="height:2px" class="my-0">
 		<br><br>
+		<?php
+		$uid = $_REQUEST["uid"];
 
-		<!-- 중복 아이디가 없는 경우 -->
-		<b>????</b>는 사용 가능한 아이디입니다.
-		<br><br><br>
-		<a href="javascript:close_me('yes');" class="btn btn-sm btn-dark text-white myfont">확 인</a>
+		$sql = "select * from member where uid = '$uid'";
+		$result = mysqli_query($db, $sql);
+		if (!$result) exit("에러: $sql");
 
-		<!-- 중복 아이디가 있는 경우 -->
-		<!--
-		<b>????</b>는 사용할 수 없는 아이디입니다.
-		<br><br><br>
-		<a href="javascript:close_me('');" class="btn btn-sm btn-dark text-white myfont">확 인</a>
-		-->
+		$count = mysqli_num_rows($result); //레코드 개수
 
+		if ($count == 0) {
+			echo ("<b>". $uid . "</b>는 <font color='green'>사용 가능한 아이디</font>입니다.
+					<br><br><br>
+					<a href='javascript:close_me(\'yes\');' class='btn btn-sm btn-dark text-white myfont'>확 인</a>");
+		} else {
+			echo ("<b>". $uid . "</b>는 <font color='red'>사용할 수 없는 아이디</font>입니다.
+					<br><br><br>
+					<a href='javascript:close_me(\'\');' class='btn btn-sm btn-dark text-white myfont'>확 인</a>");
+		}
+
+		?>
 	</div>
 </div>
 
@@ -60,3 +68,9 @@
 
 </body>
 </html>
+
+<style>
+	b {
+		color: blue;
+	}
+</style>

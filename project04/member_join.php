@@ -38,7 +38,7 @@
 		if (!form2.uid.value) {
 			alert("ID를 입력하십시요.");	form2.uid.focus();	return;
 		}
-		window.open("member_idcheck.html?uid="+form2.uid.value,"",
+		window.open("member_idcheck.php?uid="+form2.uid.value,"",
 			"width=300,height=200,scrollbar=no");
 	}
 

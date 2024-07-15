@@ -19,7 +19,7 @@ $tel = $tel1 . $tel2 . $tel3;
 $birthday = $birthday1 . $birthday2 . $birthday3;
 
 $sql = "INSERT INTO member (uid, pwd, name, tel, zip, address, email, birthday)
-        values('$uid', '$pwd','$name', '$tel', '$zip', '$address', '$eamil', '$birthday')";
+        values('$uid', '$pwd','$name', '$tel', '$zip', '$address', '$email', '$birthday')";
 
 $result = mysqli_query($db, $sql);
 

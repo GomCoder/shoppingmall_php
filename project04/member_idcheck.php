@@ -25,7 +25,7 @@ include "common.php";
 	function close_me(v)
 	{
 		opener.form2.check_id.value = v;
-		self.close();
+		window.close();
 	}
 </script>
 
@@ -52,11 +52,11 @@ include "common.php";
 		if ($count == 0) {
 			echo ("<b>". $uid . "</b>는 <font color='green'>사용 가능한 아이디</font>입니다.
 					<br><br><br>
-					<a href='javascript:close_me(\'yes\');' class='btn btn-sm btn-dark text-white myfont'>확 인</a>");
+					<a href='javascript:close_me(\"yes\");' class='btn btn-sm btn-dark text-white myfont'>확 인</a>");
 		} else {
 			echo ("<b>". $uid . "</b>는 <font color='red'>사용할 수 없는 아이디</font>입니다.
 					<br><br><br>
-					<a href='javascript:close_me(\'\');' class='btn btn-sm btn-dark text-white myfont'>확 인</a>");
+					<a href='javascript:close_me(\"\");' class='btn btn-sm btn-dark text-white myfont'>확 인</a>");
 		}
 
 		?>

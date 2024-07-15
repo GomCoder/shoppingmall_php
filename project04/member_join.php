@@ -1,9 +1,3 @@
-<!---------------------------------------------------------------------------------------------
-	제목 : 내 손으로 만드는 PHP 쇼핑몰무 (실습용 디자인 HTML)
-
-	소속 : 인덕대학교 컴퓨터소프트웨어학과
-	이름 : 교수 윤형태 (2024.02)
----------------------------------------------------------------------------------------------->
 <!doctype html>
 <html lang="kr">
 <head>
@@ -68,8 +62,8 @@
 		if (!form2.zip.value) {
 			alert("우편번호가 잘못되었습니다.");	form2.zip.focus();	return;
 		}
-		if (!form2.juso.value) {
-			alert("주소가 잘못되었습니다.");	form2.juso.focus();	return;
+		if (!form2.address.value) {
+			alert("주소가 잘못되었습니다.");	form2.address.focus();	return;
 		}
 		if (!form2.email.value) {
 			alert("이메일이 잘못되었습니다.");	form2.email.focus();	return;
@@ -140,12 +134,12 @@
 				<td align="left">주소 <font color="red">*</font></td>
 				<td align="left">
 					<div class="d-inline-flex mb-1">
-						<input type="text" name="zip" size="5" maxlength="5" value="" class="form-control form-control-sm">&nbsp;
+						<input type="text" id="zip" name="zip" size="5" maxlength="5" value="" class="form-control form-control-sm">&nbsp;
 					</div>
-					<a href="javascript:FindZip(0);"  class="btn btn-sm btn-secondary text-white mb-1"  
-						style="font-size:12px">우편번호 찾기</a><br>
+					<input type="button" class="btn btn-sm btn-secondary text-white mb-1" style="font-size:12px" onclick="execDaumPostcode()" value="우편번호 찾기">
+					<br>
 					<div class="d-inline-flex">
-						<input type="text" name="juso" size="50" value="" class="form-control form-control-sm">
+						<input type="text" id="address" name="address" size="50" value="" class="form-control form-control-sm">
 					</div>
 				</td>
 			</tr>
@@ -153,8 +147,7 @@
 				<td align="left">E-Mail</td>
 				<td align="left">
 					<div class="d-inline-flex">
-						<input type="text" name="email" size="50" value="" 
-							pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control form-control-sm">
+					<input type="text" name="email" size="50" value=""  class="form-control form-control-sm"> <!-- 입력값 검증을 위한 정규표현식 필요-->
 					</div>
 				</td>
 			</tr>
@@ -193,3 +186,31 @@
 
 </body>
 </html>
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	function execDaumPostcode() {
+		new daum.Postcode({
+			oncomplete: function(data) {
+				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+				var addr = ''; // 주소 변수
+				var extraAddr = ''; // 참고항목 변수
+
+				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+					addr = data.roadAddress;
+				} else { // 사용자가 지번 주소를 선택했을 경우(J)
+					addr = data.jibunAddress;
+				}								
+
+				// 우편번호와 주소 정보를 해당 필드에 넣는다.
+				document.getElementById('zip').value = data.zonecode;
+				document.getElementById('address').value = addr;
+			}
+		}).open();
+	}
+</script>

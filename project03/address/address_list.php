@@ -95,9 +95,7 @@ $count = $row[0];//레코드 개수
                 $tel2 = trim(substr($row["tel"], 3, 4));
                 $tel3 = trim(substr($row["tel"], 7, 4));
 
-                $tel = $tel1 . "-" . $tel2 . "-" . $tel3;
-
-                
+                $tel = $tel1 . "-" . $tel2 . "-" . $tel3;                
         ?>
         <tr>
             <td><?=$id;?></td>

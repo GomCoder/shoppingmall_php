@@ -12,6 +12,10 @@
     $page_line = 10; //페이지당 line수
     $page_block = 5; //블록당 page수
 
+    //관리자 계정 정보
+    $admin_id = "admin";
+    $admin_pw = "1234";
+
 ?>
 
 <?php
@@ -84,10 +88,5 @@ function mypagination($query, $agrs, &$count, &$pagebar) {
     $pagebar .= "</ul> </nav>";
 
     return $result;
-
-
-
-
 }
-
 ?>

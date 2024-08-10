@@ -5,6 +5,7 @@
 		&nbsp;<a href="index.html"><font color="#777777">INDUK Mall</font></a>
 	</div>
 	<div class="col mt-3" align="right" style="font-size:12px;">
+		<a href="admin/index.html"><font color="blue">관리자페이지</font></a>&nbsp;|&nbsp;
 		<a href="index.html">Home</a>&nbsp;|&nbsp;
 
 		<?php

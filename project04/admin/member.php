@@ -1,9 +1,7 @@
-<!---------------------------------------------------------------------------------------------
-	제목 : 내 손으로 만드는 PHP 쇼핑몰 (실습용 디자인 HTML)
+<?php
+	include "../common.php";
 
-	소속 : 인덕대학교 컴퓨터소프트웨어학과
-	이름 : 교수 윤형태 (2024.02)
----------------------------------------------------------------------------------------------->
+?>
 <!doctype html>
 <html lang="kr">
 <head>
@@ -12,7 +10,7 @@
 	<title>INDUK Mall</title>
 	<link  href="../css/bootstrap.min.css" rel="stylesheet">
 	<link  href="../css/my.css" rel="stylesheet">
-	<script src="..js/jquery-3.7.1.min.js"></script>
+	<script src="../js/jquery-3.7.1.min.js"></script>
 	<script src="../js/bootstrap.bundle.min.js"></script>
 	<script src="../js/my.js"></script>
 </head>
@@ -28,12 +26,22 @@
 
 	<h4 class="m-0 mb-2">회원</h4>
 
-	<form name="form1" method="post" action="member.html">
+	<form name="form1" method="post" action="member.php">
 	
 	<table class="table table-sm table-borderless m-0">
 		<tr>
 			<td align="left" style="padding-top:12px">
-			&nbsp;회원수 : <font color="red">30</font>
+				<?php
+					$sql = "SELECT count(*) FROM member WHERE id";
+					$result = mysqli_query($db, $sql);
+
+					if(!$result) exit("에러: $sql");		
+
+					$row = mysqli_fetch_array($result);
+					$count = $row[0];//레코드 개수
+						
+				?>
+			&nbsp;회원수 : <font color="red"><?=$count;?></font>
 			</td>
 			<td align="right">
 				<div class="d-inline-flex">
@@ -65,57 +73,60 @@
 			<td width="10%">구분</td>
 			<td width="15%">수정 / 삭제</td>
 		</tr>
+				<!-- 검색 기능 -->
+				<?php
+					$text1 = $_REQUEST["text1"] ? $_REQUEST["text1"] : "";
+					$sel1 = $_REQUEST["sel1"] ? $_REQUEST["sel1"] : 1;
+
+					if ($sel1 == 1) {
+						$sql="select * from member where name like '%$text1%' order by name";
+					} else {
+						$sql="select * from member where uid like '%$text1%' order by uid";
+					}
+
+					
+					$args = "text1=$text1 &sel1=$sel1";
+					$result = mypagination($sql, $args, $count, $pagebar);
+					
+
+					foreach($result as $row) {
+						$id = $row["id"];						
+
+						$tel1 = trim(substr($row["tel"], 0, 3));
+						$tel2 = trim(substr($row["tel"], 3, 4));
+						$tel3 = trim(substr($row["tel"], 7, 4));
+
+						$tel = $tel1 . "-" . $tel2 . "-" . $tel3;                
+				?>
 		<tr>
-			<td>id1</td>
-			<td>홍길동</td>
-			<td>010-1111-2222</td>
-			<td align="left" class="px-2">abcd@abcd.com</td>
-			<td>회원</td>
+			<td><?=$row['uid'];?></td>
+			<td><?=$row['name'];?></td>
+			<td><?=$tel;?></td>
+			<td align="left" class="px-2"><?=$row['email'];?></td>
 			<td>
-				<a href="member_edit.html?id=1" 
+				<?php
+					if ($row['member_state'] == '0') {
+						echo '회원';
+					} else {
+						echo '탈퇴';
+					}
+				?>
+			</td>
+			<td>
+				<a href="member_edit.php?id=<?=$id;?>" 
 					class="btn btn-sm btn-outline-info mybutton-blue">수정</a>
-				<a href="member_delete.html?id=1"  
+				<a href="member_delete.php?id=<?=$id;?>"  
 					class="btn btn-sm btn-outline-danger mybutton-red" 
 					onclick="javascript:return confirm('삭제할까요 ?');">삭제</a>				
 			</td>
 		</tr>
-		<tr>
-			<td>id2</td>
-			<td>이길동</td>
-			<td>010-3333-4444</td>
-			<td align="left" class="px-2">efgh@abcd.com</td>
-			<td>탈퇴</td>
-			<td>
-				<a href="member_edit.html?id=2" 
-					class="btn btn-sm btn-outline-info mybutton-blue">수정</a>
-				<a href="member_delete.html?id=2"  
-					class="btn btn-sm btn-outline-danger mybutton-red" 
-					onclick="javascript:return confirm('삭제할까요 ?');">삭제</a>				
-			</td>
-		</tr>
+		<?php } ?>
+		
 	</table>
 
-	<nav aria-label="Page navigation example">
-		<ul class="pagination pagination-sm justify-content-center my-3">
-			<li class="page-item">
-				<a class="page-link" href="#" aria-label="Previous">
-					<span aria-hidden="true">◁</span>
-				</a>
-			</li>
-			<li class="page-item"><a class="page-link" href="member.html?page=1&sel1=&text1=">1</a></li>
-			<li class="page-item active" aria-current="page">
-				<span class="page-link mycolor1">2</span>
-			</li>
-			<li class="page-item"><a class="page-link" href="member.html?page=3&sel1=&text1=">3</a></li>
-			<li class="page-item"><a class="page-link" href="member.html?page=4&sel1=&text1=">4</a></li>
-			<li class="page-item"><a class="page-link" href="member.html?page=5&sel1=&text1=">5</a></li>
-			<li class="page-item">
-				<a class="page-link" href="#" aria-label="Next">
-					<span aria-hidden="true">▷</span>
-				</a>
-			</li>
-		</ul>
-	</nav>
+	<?php
+    echo $pagebar; //pagination bar 표시
+    ?>            
 
 	</div>
 </div>
